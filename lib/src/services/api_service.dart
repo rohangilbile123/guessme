@@ -9,7 +9,6 @@ class ApiService {
     return Future.delayed(Duration(seconds: 2), () {
       return [
         Question(
-          category: 'Person',
           questionText: 'Who is the founder of SpaceX?',
           answer: 'Elon Musk',
           options: [
@@ -18,10 +17,8 @@ class ApiService {
             'Richard Branson',
             'Mark Zuckerberg',
           ],
-          difficultyLevel: 'Medium',
         ),
         Question(
-          category: 'Animal',
           questionText: 'Which animal is known as the "king of the jungle"?',
           answer: 'Lion',
           options: [
@@ -30,7 +27,6 @@ class ApiService {
             'Leopard',
             'Cheetah',
           ],
-          difficultyLevel: 'Easy',
         ),
         // Add more questions here...
       ];

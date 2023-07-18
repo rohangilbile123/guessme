@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/question.dart';
 import '../services/api_service.dart';
+import 'dart:async';
 
 class GameScreen extends StatefulWidget {
   @override
@@ -12,11 +13,14 @@ class _GameScreenState extends State<GameScreen> {
   int _currentQuestionIndex = 0;
   int _score = 0;
   ApiService _apiService = ApiService();
-
+  late Timer _timer;
+  int _timerDuration = 10;
+  bool _isLoadingNextQuestion = false;
   @override
   void initState() {
     super.initState();
     _fetchQuestions();
+    _startTimer();
   }
 
   void _fetchQuestions() async {
@@ -26,24 +30,44 @@ class _GameScreenState extends State<GameScreen> {
     });
   }
 
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      setState(() {
+        if (_timerDuration > 0) {
+          _timerDuration--;
+        } else {
+          _isLoadingNextQuestion = true;
+          _timer.cancel();
+          _showNextQuestion();
+        }
+      });
+    });
+  }
+
   void _checkAnswer(String selectedOption) {
     Question currentQuestion = _questions[_currentQuestionIndex];
-    if (selectedOption == currentQuestion.answer) {
+    if (!_isLoadingNextQuestion) {
       setState(() {
-        _score++;
+        _isLoadingNextQuestion = true;
+        _timer.cancel();
+        if (selectedOption == currentQuestion.answer) {
+          _score++;
+        }
+        _showNextQuestion();
       });
     }
-    _showNextQuestion();
   }
 
   void _showNextQuestion() {
     if (_currentQuestionIndex < _questions.length - 1) {
       setState(() {
         _currentQuestionIndex++;
+        _timerDuration = 10;
+        _isLoadingNextQuestion = false;
+        _startTimer();
       });
     } else {
-      // Handle end of the game
-      // You can navigate to a score screen or show a dialog
+      _timer.cancel();
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -53,9 +77,22 @@ class _GameScreenState extends State<GameScreen> {
             actions: [
               TextButton(
                 onPressed: () {
+                  Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+                },
+                child: Text('Continue to Home'),
+              ),
+              TextButton(
+                onPressed: () {
+                  setState(() {
+                    _currentQuestionIndex = 0;
+                    _score = 0;
+                    _timerDuration = 10;
+                    _isLoadingNextQuestion = false;
+                  });
+                  _startTimer();
                   Navigator.pop(context);
                 },
-                child: Text('OK'),
+                child: Text('Retake Quiz'),
               ),
             ],
           );
@@ -94,10 +131,6 @@ class _GameScreenState extends State<GameScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    'Category: ${_questions[_currentQuestionIndex].category}',
-                    style: TextStyle(fontSize: 18.0),
-                  ),
                   SizedBox(height: 16.0),
                   Text(
                     _questions[_currentQuestionIndex].questionText,
@@ -110,9 +143,20 @@ class _GameScreenState extends State<GameScreen> {
                     'Score: $_score',
                     style: TextStyle(fontSize: 18.0),
                   ),
+                  SizedBox(height: 16.0),
+                  Text(
+                    'Timer: $_timerDuration',
+                    style: TextStyle(fontSize: 18.0),
+                  ),
                 ],
               ),
             ),
     );
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 }
