@@ -1,4 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:guessme/src/screens/auth/mobile_sign.dart';
+import 'package:guessme/src/screens/auth/otp.dart';
 import './src/screens/home_screen.dart';
 import './src/screens/game_screen.dart';
 
@@ -13,8 +16,10 @@ class GuessGameApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/',
+      initialRoute: '/phone',
       routes: {
+        '/phone': (context) => MyPhone(),
+        '/otp': (context) => MyOtp(),
         '/': (context) => HomeScreen(),
         '/game': (context) => GameScreen(),
       },

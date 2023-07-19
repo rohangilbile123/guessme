@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "156067823526",
+    "project_id": "guess-me-406ec",
+    "storage_bucket": "guess-me-406ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156067823526:android:d8673af25c5fce63fa9967",
+        "android_client_info": {
+          "package_name": "com.example.guessme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "156067823526-catsv4djq4qtbhqt95kcf63776n6v3mf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0ZXQ2CY02NpQJB5ATMPAd0NSkcCqfWkU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "156067823526-catsv4djq4qtbhqt95kcf63776n6v3mf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
