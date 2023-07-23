@@ -68,36 +68,37 @@ class _GameScreenState extends State<GameScreen> {
       });
     } else {
       _timer.cancel();
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Game Over'),
-            content: Text('Your score: $_score'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
-                },
-                child: Text('Continue to Home'),
-              ),
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    _currentQuestionIndex = 0;
-                    _score = 0;
-                    _timerDuration = 10;
-                    _isLoadingNextQuestion = false;
-                  });
-                  _startTimer();
-                  Navigator.pop(context);
-                },
-                child: Text('Retake Quiz'),
-              ),
-            ],
-          );
-        },
-      );
+      Navigator.pop(context, _score);
+      // showDialog(
+      //   context: context,
+      //   builder: (BuildContext context) {
+      //     return AlertDialog(
+      //       title: Text('Game Over'),
+      //       content: Text('Your score: $_score'),
+      //       actions: [
+      //         TextButton(
+      //           onPressed: () {
+      //             Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
+      //           },
+      //           child: Text('Continue to Home'),
+      //         ),
+      //         TextButton(
+      //           onPressed: () {
+      //             setState(() {
+      //               _currentQuestionIndex = 0;
+      //               _score = 0;
+      //               _timerDuration = 10;
+      //               _isLoadingNextQuestion = false;
+      //             });
+      //             _startTimer();
+      //             Navigator.pop(context);
+      //           },
+      //           child: Text('Retake Quiz'),
+      //         ),
+      //       ],
+      //     );
+      //   },
+      // );
     }
   }
 

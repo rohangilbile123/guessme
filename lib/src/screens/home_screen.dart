@@ -73,28 +73,47 @@ class HomeScreen extends StatelessWidget {
                     shrinkWrap: true,
                     crossAxisCount: 3,
                     children: List.generate(8, (index) {
+                      final category = categoryNames[index];
+                      final imagePath = 'assets/banner.jpg';
+
                       return GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(
                             context,
-                            '/game',
-                            arguments: categoryNames[index],
+                            '/level',
+                            arguments: category,
                           );
                         },
                         child: GridTile(
-                          child: Container(
-                            margin: EdgeInsets.all(10),
-                            height: 50,
-                            width: 40,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                             color: Colors.blue[200],
-                            child: Center(
-                              child: Text(categoryNames[index]),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  imagePath,
+                                  width: 50,
+                                  height: 50,
+                                  fit: BoxFit.contain,
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  category,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       );
                     }),
                   ),
+
                   // Add your additional section here
                   const SizedBox(
                     height: 10,
@@ -102,7 +121,7 @@ class HomeScreen extends StatelessWidget {
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/game');
+                        Navigator.pushNamed(context, '/level');
                       },
                       child: Text('Start Game'),
                     ),

@@ -4,6 +4,7 @@ import 'package:guessme/src/screens/auth/mobile_sign.dart';
 import 'package:guessme/src/screens/auth/otp.dart';
 import './src/screens/home_screen.dart';
 import './src/screens/game_screen.dart';
+import './src/screens/levels.dart';
 
 void main() => runApp(GuessGameApp());
 
@@ -16,12 +17,13 @@ class GuessGameApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      initialRoute: '/phone',
+      initialRoute: '/',
       routes: {
         '/phone': (context) => MyPhone(),
         '/otp': (context) => MyOtp(),
         '/': (context) => HomeScreen(),
         '/game': (context) => GameScreen(),
+        '/level': (context) => LevelScreen(),
       },
     );
   }
